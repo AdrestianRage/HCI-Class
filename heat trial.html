@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="heat.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="heatmap"></div>
+
+    <script>
+      const heatmap = document.getElementById('heatmap');
+      const numRows = 4;
+      const numCols = 5;
+    
+      const data = [
+        [2, 4, 3, 1, 5],
+        [3, 2, 4, 2, 1],
+        [5, 1, 2, 3, 3],
+        [2, 4, 5, 1, 2]
+      ];
+    
+      function createHeatmap() {
+        for (let i = 0; i < numRows; i++) {
+          for (let j = 0; j < numCols; j++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+    
+            const value = data[i][j];
+            const color = getColor(value);
+            cell.style.backgroundColor = color;
+
+    
+            heatmap.appendChild(cell);
+          }
+        }
+      }
+    
+      function getColor(value) {
+        const scaledValue = (value - 1) / 4;
+    
+        let red, green;
+    
+        if (scaledValue < 0.5) { // First half (red to yellow)
+          red = 255;
+          green = scaledValue * 2 * 255; // Green increases to 255
+        } else { // Second half (yellow to green)
+          red = (1 - (scaledValue - 0.5) * 2) * 255; // Red decreases from 255
+          green = 255;
+        }
+    
+        return `rgb(${red}, ${green}, 0)`;
+      }
+    
+      createHeatmap();
+    </script>
+       
+</body>
+</html> 
